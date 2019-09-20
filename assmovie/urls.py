@@ -18,8 +18,12 @@ from movie.urls import movie_urls
 from ticket.urls import ticket_urls
 from coupon.urls import coupon_urls
 
+from user.views import login, register
+
 urlpatterns = [
     path('movies', include(movie_urls)),
     path('tickets', include(ticket_urls)),
     path('coupon', include(coupon_urls)),
+    path('login', login),
+    path('register', register),
 ]

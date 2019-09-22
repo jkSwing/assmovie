@@ -21,10 +21,10 @@ def get_tickets(request):
     page = int(page)
     limit = int(limit)
     start = (page - 1) * limit
-    if not expired:
-        tickets = Ticket.objects.filter(user_id=user_id, show__time__gte=datetime.now()).order_by('show__time')[start: start + limit]
+    if not expired or expired.lower() == 'false':
+        tickets = Ticket.objects.filter(user_id=user_id).order_by('show__time', 'id')[start: start + limit]
     else:
-        tickets = Ticket.objects.filter(user_id=user_id).order_by('show__time')[start: start + limit]
+        tickets = Ticket.objects.filter(user_id=user_id, show__time__gte=datetime.now()).order_by('show__time', 'id')[start: start + limit]
     serializer = TicketSerializer(tickets, many=True)
 
     return Response({'success': True, 'message': '成功', 'data': serializer.data})
